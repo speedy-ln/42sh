@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/15 11:26:37 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/15 13:07:33 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	int		i;
 	char	*newline;
 
-	ft_putstr(line2[0]);
-	ft_putchar('\n');
+	ft_printf("ft_excecute\n");
 	if (line2[0][0] != '/')
 	{
+		ft_putstr("\n\nnormal mode\n\n");
 		newline = (char *)malloc(sizeof(char *) *
 				(sizeof(env->path) + sizeof(line2[0]) + 1));
 		ft_strcpy(newline, env->path);
@@ -31,7 +31,7 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	}
 	else
 	{
-		ft_putstr("WE IN\n\n");
+		ft_putstr("\n\nOur mode\n\n");
 		newline = (char *)malloc(sizeof(char *) * ft_strlen(line2[0]) + 1);
 		env->cmd = (char **)malloc(sizeof(char **) * 5);
 		env->cmd[0] = (char *)malloc(sizeof(char *) * sizeof(line2[0]) + 1);
