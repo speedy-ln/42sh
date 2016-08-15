@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/15 11:28:29 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_doublecoms(t_env *env, t_main *w)
 	while (ft_select(w, &w->line))
 		;
 	ft_selectend(w);
+	ft_putstr(w->line);
+	ft_putstr("\n");
 	w = ft_keep_main(*w, 0);
 	if (ft_strchr(w->line, '>') != 0 || ft_strchr(w->line, '<') != 0)
 		ft_redirect(w, env);

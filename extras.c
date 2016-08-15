@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 09:57:55 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/15 11:26:37 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,27 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	int		i;
 	char	*newline;
 
-	newline = (char *)malloc(sizeof(char *) * \
-			(sizeof(env->path) + sizeof(line2[0]) + 1));
-	ft_strcpy(newline, env->path);
-	env->cmd = (char **)malloc(sizeof(char **) * 5);
-	env->cmd[0] = (char *)malloc(sizeof(char *) * \
-			(sizeof(newline) + sizeof(line2[0]) + 1));
-	ft_strcpy(env->cmd[0], strcat(newline, line2[0]));
+	ft_putstr(line2[0]);
+	ft_putchar('\n');
+	if (line2[0][0] != '/')
+	{
+		newline = (char *)malloc(sizeof(char *) *
+				(sizeof(env->path) + sizeof(line2[0]) + 1));
+		ft_strcpy(newline, env->path);
+		env->cmd = (char **)malloc(sizeof(char **) * 5);
+		env->cmd[0] = (char *)malloc(sizeof(char *) * \
+				(sizeof(newline) + sizeof(line2[0]) + 1));
+		ft_strcpy(env->cmd[0], ft_strcat(newline, line2[0]));
+	}
+	else
+	{
+		ft_putstr("WE IN\n\n");
+		newline = (char *)malloc(sizeof(char *) * ft_strlen(line2[0]) + 1);
+		env->cmd = (char **)malloc(sizeof(char **) * 5);
+		env->cmd[0] = (char *)malloc(sizeof(char *) * sizeof(line2[0]) + 1);
+		ft_strcpy(env->cmd[0], line2[0]);
+	}
+	ft_printf("\n\n%s\n\n", line2[0]); 
 	env->args = (char **)malloc(sizeof(char **) * (comcount + 1));
 	i = 0;
 	while (i < comcount)
@@ -35,10 +49,10 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	env->args[i] = NULL;
 	execve(env->cmd[0], env->args, &env->enviro[0]);
 	free(newline);
-	if (env->cmd[0] != NULL)
-		ft_free2d(env->cmd);
-	if (env->args[0] != NULL)
-		ft_free2d(env->args);
+	//	if (env->cmd[0] != NULL)
+	//		ft_free2d(env->cmd);
+	//	if (env->args[0] != NULL)
+	//		ft_free2d(env->args);
 	return (*env);
 }
 
