@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 10:38:18 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ int		ft_init(t_main *e)
 	e->a[++e->y].x = -1;
 	e->y_cursor = e->y;
 	e->a[e->y].buff = 1024;
-	e->a[e->y].line = (char *)malloc(sizeof(char) * e->a[e->y].buff);
-	ft_strclr(e->a[e->y].line);
+	e->a[e->y].line = ft_strnew(e->a[e->y].buff);
 	return (1);
 }
 

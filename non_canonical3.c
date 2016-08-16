@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 10:39:25 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int		ft_selectremalloc(t_main *e)
 
 	x = -1;
 	e->a[e->y].buff += 1024;
-	tmp = (char *)malloc(sizeof(char) * e->a[e->y].buff);
+	tmp = ft_strnew(e->a[e->y].buff);
 	while (e->a[e->y].line[++x])
 		tmp[x] = e->a[e->y].line[x];
 	if (e->a[e->y].line)

@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/16 08:19:48 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 10:31:35 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,8 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	int		i;
 	char	*newline;
 
-	ft_printf("ft_excecute\n");
 	if (line2[0][0] != '/')
 	{
-		ft_putstr("\n\nnormal mode\n\n");
 		newline = (char *)malloc(sizeof(char *) *
 				(sizeof(env->path) + sizeof(line2[0]) + 1));
 		ft_strcpy(newline, env->path);
@@ -31,13 +29,11 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	}
 	else
 	{
-		ft_putstr("\n\nOur mode\n\n");
 		newline = (char *)malloc(sizeof(char *) * ft_strlen(line2[0]) + 1);
 		env->cmd = (char **)malloc(sizeof(char **) * 5);
 		env->cmd[0] = (char *)malloc(sizeof(char *) * sizeof(line2[0]) + 1);
 		ft_strcpy(env->cmd[0], line2[0]);
 	}
-	ft_printf("\n\n%s\n\n", line2[0]); 
 	env->args = (char **)malloc(sizeof(char **) * (comcount + 1));
 	i = 0;
 	while (i < comcount)
@@ -156,7 +152,6 @@ t_env	get_dir(t_env *env, char **line)
 	char			**tdir;
 
 	linel = get_path(env);
-	ft_printf("sup bro\n");
 	ft_strcpy(linel, ft_strfcut(linel, 5));
 	line2 = ft_strsplit(linel, ':');
 	free(linel);

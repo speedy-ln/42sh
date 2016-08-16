@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 10:23:08 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ char	*get_path(t_env *env)
 	extern char	**environ;
 
 	i = 0;
-	while (1)
+	tmp = NULL;
+	while (env->enviro[i])
 	{
 		if (ft_strncmp(env->enviro[i], "PATH", 3) == 0)
 		{
