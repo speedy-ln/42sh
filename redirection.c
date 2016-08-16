@@ -25,6 +25,7 @@ void	ft_redirect(t_main *w, t_env *env)
 	}
 	else if (ft_strchr(w->line, '<') != 0)
 		redirection_lt(w, env);
+	ft_strcpy(w->line, "");
 }
 
 void	redirection_gt(t_main *w, t_env *env, int append)
