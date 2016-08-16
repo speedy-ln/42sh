@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:54 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 11:12:04 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,24 +45,17 @@ void	ft_quit(void)
 	t_env	*env;
 	t_main	*w;
 
-	env = NULL;
-	w = NULL;
+//	env = NULL;
+//	w = NULL;
 	env = ft_keep_struct(*env, 1);
 	w = ft_keep_main(*w, 1);
 	if (env->father != 0)
 	{
-		w->line = NULL;
-		w->start = -2;
-		w->clip = NULL;
-		w->buffsize = 0;
-		w->a = 0;
-		w->y = -1;
-		ft_selectinit(w);
-		ft_init(w);
-		kill(env->father, SIGINT);
+//		kill(env->father, SIGINT);
 		ft_doublecoms(env, w);
 	}
 	ft_exit(env, w);
+	exit(0);
 }
 
 void	sinno(int signall)

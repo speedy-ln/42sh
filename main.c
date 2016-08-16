@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 08:29:10 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 10:42:34 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_env	*set_env(char **line2, t_env *env)
 	char	**envirok;
 
 	i = 1;
-	if (ft_strlen2D(line2) != 1)
+	if (ft_strlen2D(line2) == 3)
 	{
 		while (line2[1] && env->enviro[i] != NULL)
 		{

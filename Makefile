@@ -6,13 +6,13 @@
 #    By: kcowle <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/07 15:59:15 by kcowle            #+#    #+#              #
-#    Updated: 2016/08/15 07:16:41 by knage            ###   ########.fr        #
+#    Updated: 2016/08/16 11:09:45 by knage            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 42sh
 
-CC = clang -Wall -Wextra -Werror
+CC = gcc
 
 SRC =	file_arf.c			\
 		cut_copy_paste.c	\
