@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/15 11:22:27 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 08:12:56 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	minishell_support1(t_main *m, t_env *env)
 	char *line;
 
 	line = NULL;
-	ft_printf("start %i\n", env->father);
 	if (env->father == 0)
 	{
 		ft_printf("minishell_spport1\n");
@@ -27,7 +26,9 @@ void	minishell_support1(t_main *m, t_env *env)
 		m->line2 = ft_strsplit(m->line, ' ');
 		while (m->line2[m->comcount] != NULL)
 			m->comcount++;
+		ft_printf("\n\n%s\n\n", env->path);
 		*env = get_dir(env, m->line2);
+		ft_printf("here\n");
 		line = ft_strtrim(m->line2[0]);
 		free(m->line2[0]);
 		m->line2[0] = line;
@@ -36,7 +37,6 @@ void	minishell_support1(t_main *m, t_env *env)
 	}
 	else
 	{
-		ft_printf("wait\n");
 		wait(NULL);
 		wait(NULL);
 	}
@@ -56,8 +56,7 @@ void	ft_minishell(t_env *env, t_main *m)
 			m = ft_keep_main(*m, 0);
 			if (env->father >= 0)
 			{
-				ft_printf("ft_minishell\n");
-		//		signal(SIGINT, sinno);
+				signal(SIGINT, sinno);
 				minishell_support1(m, env);
 			}
 		}

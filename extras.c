@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/15 13:07:33 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/16 08:19:48 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,11 +156,13 @@ t_env	get_dir(t_env *env, char **line)
 	char			**tdir;
 
 	linel = get_path(env);
+	ft_printf("sup bro\n");
 	ft_strcpy(linel, ft_strfcut(linel, 5));
 	line2 = ft_strsplit(linel, ':');
 	free(linel);
 	if (line[0][0] == '/')
 	{
+		ft_putstr("test\n\n");
 		tdir = ft_strsplit(line[0], '/');
 		env->path = (char *)malloc(sizeof(char *) * ft_strlen(tdir[0]));
 		env->path[0] = '/';
