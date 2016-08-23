@@ -65,8 +65,6 @@ void	redirection_lt(t_main *w, t_env *env)
 	char	*line;
 	char	*ln;
 	pid_t	childpid;
-	char    readbuffer[80];
-	int		temp;
 
 	coms = ft_strsplit(w->line, '<');
 	fd[0] = open(ft_strrw(coms[1]), O_RDWR);
@@ -85,6 +83,7 @@ void	redirection_lt(t_main *w, t_env *env)
 			ft_putchar('\n');
 			ft_putstr("heredoc> ");
 		}
+		ft_putstr("\33[2K\r");
 		ln = ft_strjoin(ln, "\0");
 		if (pipe(fd2) != -1)
 		{
