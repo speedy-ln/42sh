@@ -99,19 +99,17 @@ void	redirection_lt(t_main *w, t_env *env)
 			{
 				/* Child process closes up input side of pipe */
 				close(fd2[1]);
-				read(fd2[0], readbuffer, 1024);
-				ft_putendl(readbuffer);
+//				close(fd2[0]);
+				fd[1] = dup(STDIN_FILENO);
+				dup2(fd2[0], STDIN_FILENO);
 				close(fd2[0]);
 				ft_strcpy(w->line, coms[0]);
-				fd[1] = dup(STDIN_FILENO);
-				ft_putnbr(fd2[0]);
-				temp = dup2(fd2[0], STDIN_FILENO);
-				close(fd2[0]);
-				ft_minishell2(env, *w);
+				ft_minishell(env, w);
 				dup2(fd[1], STDIN_FILENO);
 				close(fd[1]);
-				ft_putnbr(temp);
-				exit(0);
+				close(fd2[0]);
+//				close(fd2[1]);
+//				exit(0);
 			}
 			else
 			{
