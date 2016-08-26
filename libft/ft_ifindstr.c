@@ -1,28 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_ifindstr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/07 16:01:13 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/23 16:10:02 by kcowle           ###   ########.fr       */
+/*   Created: 2016/08/15 08:11:22 by kcowle            #+#    #+#             */
+/*   Updated: 2016/08/22 10:37:06 by kcowle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t		ft_strlen(const char *str)
+int     ft_ifindstr(char *str, char *find)
 {
-	int		i;
+	int     in_word;
+	int     i;
+	int     j;
+	int     find_len;
 
 	i = 0;
-	if (str != NULL)
+	j = 0;
+	find_len = ft_strlen(find);
+	in_word = 0;
+	while (str[i])
 	{
-		while (str[i] != '\0')
-		{
-			i++;
-		}
-}
-	return (i);
+		if (str[i] == find[j] && (j + 1 == find_len))
+			return (i - j);
+		else if (str[i] != find[j])
+			j = 0;
+		else
+			j++;
+		i++;
+	}
+	return (-1);
 }

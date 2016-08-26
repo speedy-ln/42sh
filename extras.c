@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/16 10:31:35 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/18 10:29:04 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	env->args[i] = NULL;
 	execve(env->cmd[0], env->args, &env->enviro[0]);
 	free(newline);
-	//	if (env->cmd[0] != NULL)
-	//		ft_free2d(env->cmd);
-	//	if (env->args[0] != NULL)
-	//		ft_free2d(env->args);
+	if (env->cmd[0] != NULL)
+		ft_free2d(env->cmd);
+	if (env->args[0] != NULL)
+		ft_free2d(env->args);
 	return (*env);
 }
 

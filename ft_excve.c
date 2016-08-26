@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/18 09:39:23 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	ft_execve2(t_execve *c, t_env *env, char **com, t_main *w)
 	while (((c->k = 0) || 1) && c->length >= 0)
 		close(c->fd[--c->length + 1]);
 	while (c->k <= c->i)
+	{
 		c->k += 1 + 0 * wait(NULL);
+		env->father = 0;
+	}
 }
 
 void	ft_excve(t_env *env, char **com, int i, t_main *w)

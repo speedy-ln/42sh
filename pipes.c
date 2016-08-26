@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/22 15:54:23 by kcowle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_minishell2(t_env *env, t_main m)
 	{
 		if (m.line[0] == '.' && m.line[1] == '/')
 			m.line = ft_strfcut(m.line, 2);
-		if (ft_isbuiltin(env, m.line))
+		if (ft_isbuiltin(env, &m) == 0)
 		{
 			m.comcount = 0;
 			m.line = ft_strtrim(m.line);

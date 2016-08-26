@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/16 10:42:34 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/23 13:16:08 by kcowle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,30 +115,38 @@ void	main_init(t_main *main)
 
 int		main(void)
 {
-	t_env			env;
+	t_env			*env;
 	extern char		**environ;
 	int				i;
 	int				n;
-	t_main			w;
+	t_main			*w;
 
 	n = 0;
 	i = 0;
-	env.prev_pwd = NULL;
-	env.cont = 0;
+	w = ft_keep_main();
+	env = ft_keep_struct();
+	env->prev_pwd = NULL;
+	env->cont = 0;
+	env->father = 0;
+	env->vars = 0;
+	w->pro = (char *)malloc(sizeof(char *) * ft_strlen("<<^>>: "));
+	ft_strcpy(w->pro, "<<^>>: ");
+	w->ret = '\n';
 	while (environ[i] != NULL)
 		i++;
-	env.enviro = (char **)malloc(sizeof(char **) * i + 1);
-	env.envirobk = (char **)malloc(sizeof(char **) * i + 1);
+	env->enviro = (char **)malloc(sizeof(char **) * i + 1);
+	env->envirobk = (char **)malloc(sizeof(char **) * i + 1);
 	while (n < i)
 	{
-		env.enviro[n] = (char *)malloc(sizeof(char *) * ft_strlen(environ[n]));
-		env.envirobk[n] = (char *)malloc(sizeof(char *) *\
+		env->enviro[n] = (char *)malloc(sizeof(char *) * ft_strlen(environ[n]));
+		env->envirobk[n] = (char *)malloc(sizeof(char *) *\
 				ft_strlen(environ[n]));
-		ft_strcpy(env.enviro[n], environ[n]);
-		ft_strcpy(env.envirobk[n], environ[n]);
+		ft_strcpy(env->enviro[n], environ[n]);
+		ft_strcpy(env->envirobk[n], environ[n]);
 		n++;
 	}
-	main_init(&w);
-	ft_doublecoms(&env, &w);
+	main_init(w);
+	signal(SIGINT, sinno);
+	ft_doublecoms(env, w, 1);
 	return (0);
 }

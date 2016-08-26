@@ -6,27 +6,30 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/16 10:23:08 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/19 07:26:49 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwosh.h"
 
-void	ft_getenv(t_env *env, char *text)
+char	*ft_getenv(t_env *env, char *text)
 {
-	int				i;
+	int     i;
+    char    *ret;
 
 	i = 0;
 	text++;
+    ret = NULL;
 	while (env->enviro[i] != NULL)
 	{
 		if (ft_strncmp(text, env->enviro[i], ft_strlen(text)) == 0)
-		{
-			ft_putstr(env->enviro[i]);
-			ft_putstr("\n");
-		}
+        {
+            ret = ft_strsub(env->enviro[i], ft_strlen(text) + 1, ft_strlen(env->enviro[i]) - ft_strlen(text) + 1);
+                            break;
+        }
 		i++;
 	}
+    return(ret);
 }
 
 int		ft_pow(int n, int p)
@@ -58,7 +61,7 @@ void	ft_echo(t_env *env, char *line)
 	}
 	if (line[0] == '$')
 	{
-		ft_getenv(env, line);
+        ft_printf("%s\n",ft_getenv(env, line));
 		ec.state = 0;
 	}
 	ec.i = 0;

@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   ft_strpaste.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/18 09:47:11 by knage            ###   ########.fr       */
+/*   Created: 2016/08/19 09:00:26 by knage             #+#    #+#             */
+/*   Updated: 2016/08/19 09:01:31 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fortytwosh.h"
+#include "libft.h"
 
-t_main	*ft_keep_main()
+char    *ft_strpaste(char *str, int start, char *clip, int end)
 {
-	static t_main m;
+	char    *begin;
+	char    *rest;
+	char    *ret;
 
-	return (&m);
-}
-
-t_env	*ft_keep_struct()
-{
-	static t_env tmp;
-
-	return (&tmp);
-}
-
-void	ft_quit(void)
-{
-	t_env	*env;
-	t_main	*w;
-
-	env = ft_keep_struct();
-	w = ft_keep_main();
-	if (env->father != 0)
-		kill(env->father, SIGINT);
-	else 
-		ft_exit(env, w);
-}
-
-void	sinno(int signall)
-{
-	if (signall == SIGINT)
-		ft_quit();
+	begin = ft_strsub(str, 0, start);
+	rest = ft_strsub(str, end, ft_strlen(str) - end);
+	ret = ft_strjoin(begin, clip);
+	ret = ft_strjoin(ret, rest);
+	free(begin);
+	free(rest);
+	return (ret);
 }

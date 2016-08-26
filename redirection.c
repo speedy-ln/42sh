@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "fortytwosh.h"
-#include <stdio.h>
 
 void	ft_redirect(t_main *w, t_env *env)
 {
@@ -37,9 +36,9 @@ void	redirection_gt(t_main *w, t_env *env, int append)
 	coms = ft_strsplit(w->line, '>');
 	coms[1] = ft_strtrim(coms[1]);
 	if (append == 1)
-		fd[0] = open(ft_strrw(coms[1]), O_RDWR | O_CREAT | O_APPEND, 0666);
+		fd[0] = open(ft_strtrim(coms[1]), O_RDWR | O_CREAT | O_APPEND, 0666);
 	else
-		fd[0] = open(ft_strrw(coms[1]), O_RDWR | O_CREAT, 0666);
+		fd[0] = open(ft_strtrim(coms[1]), O_RDWR | O_CREAT, 0666);
 	if (fd[0] < 0)
 	{
 		ft_strcpy(w->line, " ");
@@ -67,7 +66,7 @@ void	redirection_lt(t_main *w, t_env *env)
 	pid_t	childpid;
 
 	coms = ft_strsplit(w->line, '<');
-	fd[0] = open(ft_strrw(coms[1]), O_RDWR);
+	fd[0] = open(ft_strtrim(coms[1]), O_RDWR);
 	ln = (char *)malloc(sizeof(char *) * 1);
 	ln[0] = '\0';
 	if (ft_findstr("<<", w->line))
@@ -75,7 +74,7 @@ void	redirection_lt(t_main *w, t_env *env)
 		ft_putstr("heredoc> ");
 		while (get_next_line(0, &line))
 		{
-			if (ft_strcmp(line, ft_strrw(coms[1])) == 0)
+			if (ft_strcmp(line, ft_strtrim(coms[1])) == 0)
 				break;
 			ln = ft_strjoin(ln, line);
 			ln = ft_strjoin(ln, "\n");
@@ -96,9 +95,7 @@ void	redirection_lt(t_main *w, t_env *env)
 			}
 			else if(childpid == 0)
 			{
-				/* Child process closes up input side of pipe */
 				close(fd2[1]);
-//				close(fd2[0]);
 				fd[1] = dup(STDIN_FILENO);
 				dup2(fd2[0], STDIN_FILENO);
 				close(fd2[0]);
@@ -107,12 +104,9 @@ void	redirection_lt(t_main *w, t_env *env)
 				dup2(fd[1], STDIN_FILENO);
 				close(fd[1]);
 				close(fd2[0]);
-//				close(fd2[1]);
-//				exit(0);
 			}
 			else
 			{
-				/* Parent process closes up output side of pipe */
 				close(fd2[0]);
 				ft_putstr_fd(ln, fd2[1]);
 				close(fd2[1]);

@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/07 16:01:14 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/12 08:20:33 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/19 09:03:08 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct		s_c
 	int		(*f)(va_list ap, int nb);
 }					t_c;
 
+int					ft_ifindstr(char *str, char *find);
+size_t				ft_strlen2D(char **str);
 int					ft_atoi(const char *src);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
@@ -112,6 +114,7 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strmap(char const *s, char (*f)(char));
+char				*ft_strpaste(char *str, int start, char *clip, int end);
 char				*ft_strnew(size_t size);
 char				*ft_strtrim(const char *s);
 char                *ft_strrw(char *str);
@@ -122,6 +125,5 @@ char                *ft_strnshift(char *str, unsigned int n);
 size_t				ft_wcslen(const wchar_t *ws);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
-size_t				ft_strlen2D(char **str);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 #endif

@@ -6,13 +6,15 @@
 #    By: kcowle <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/07 16:00:34 by kcowle            #+#    #+#              #
-#    Updated: 2016/08/12 08:21:53 by knage            ###   ########.fr        #
+#    Updated: 2016/08/19 09:02:42 by knage            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-SRC = ft_strmerge.c			\
+SRC = ft_ifindstr.c 		\
+	  ft_strlen2d.c			\
+	  ft_strmerge.c			\
 	  ft_memset.c			\
 	  ft_itoa.c				\
 	  ft_bzero.c			\
@@ -85,83 +87,10 @@ SRC = ft_strmerge.c			\
 	  ft_strfcut.c			\
 	  ft_strnshift.c		\
 	  ft_strrw.c			\
-	  ft_strlen2d.c			\
+	  ft_strpaste.c			\
 
 
-SRCO = ft_strmerge.o		\
-	   ft_memset.o			\
-	   ft_itoa.o			\
-	   ft_bzero.o			\
-	   ft_memcpy.o			\
-	   ft_memccpy.o			\
-	   ft_memmove.o			\
-	   ft_memchr.o			\
-	   ft_memcmp.o			\
-	   ft_strlen.o			\
-	   ft_strdup.o			\
-	   ft_strcpy.o			\
-	   ft_strncpy.o			\
-	   ft_strcat.o			\
-	   ft_strncat.o			\
-	   ft_strlcat.o			\
-	   ft_strchr.o			\
-	   ft_strstr.o			\
-	   ft_strrchr.o			\
-	   ft_strnstr.o			\
-	   ft_strcmp.o			\
-	   ft_strncmp.o			\
-	   ft_atoi.o			\
-	   ft_isalpha.o			\
-	   ft_isdigit.o			\
-	   ft_isascii.o			\
-	   ft_isalnum.o			\
-	   ft_isprint.o			\
-	   ft_toupper.o			\
-	   ft_tolower.o			\
-	   ft_putchar.o			\
-	   ft_putchar_fd.o		\
-	   ft_putstr.o			\
-	   ft_putstr_fd.o		\
-	   ft_putendl.o			\
-	   ft_putendl_fd.o		\
-	   ft_strequ.o			\
-	   ft_strnequ.o			\
-	   ft_strclr.o			\
-	   ft_memalloc.o		\
-	   ft_memdel.o			\
-	   ft_strnew.o			\
-	   ft_strdel.o			\
-	   ft_strtrim.o			\
-	   ft_strsub.o			\
-	   ft_striter.o			\
-	   ft_striteri.o		\
-	   ft_strmap.o			\
-	   ft_strmapi.o			\
-	   ft_putnbr.o			\
-	   ft_putnbr_fd.o		\
-	   ft_strjoin.o			\
-	   ft_strsplit.o		\
-	   ft_iswhitespace.o	\
-	   ft_abs.o			 	\
-	   ft_lstadd.o			\
-	   ft_lstnew.o			\
-	   get_next_line.o		\
-	   ft_isnbr.o			\
-	   ft_putnbr_base.o     \
-	   ft_put_pf.o          \
-	   ft_put_pf2.o         \
-	   ft_printf.o          \
-	   ft_putwstr.o         \
-	   ft_wcslen.o          \
-	   ft_putwstr_pf.o      \
-	   ft_printf_lib.o      \
-	   ft_put_pf3.o         \
-	   ft_atoil.o           \
-	   ft_findstr.o         \
-	   ft_strfcut.o         \
-	   ft_strnshift.o       \
-	   ft_strrw.o           \
-	   ft_strlen2d.o		\
+SRCO = $(SRC:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
 

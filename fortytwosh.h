@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/07 15:59:48 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/16 10:55:54 by knage            ###   ########.fr       */
+/*   Updated: 2016/08/23 14:55:32 by kcowle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct		s_env
 	int				i;
 	char			**history;
 	char			*prev_pwd;
+	char			**vars;
 }					t_env;
 
 typedef struct		s_echo
@@ -92,18 +93,15 @@ typedef struct		s_main
 	int				lineprom;
 	int				quote;
 	int				open;
+	char			is_tab;
+	char			ctrl_v;
+	char			*pro;
+	char			ret;
 }					t_main;
 
-typedef struct		s_excve
-{
-	int	x;
-	int	u;
-	int	y;
-	int	n;
-	int	k;
-	int	length;
-}					t_excve;
-
+void				ft_freet_main(t_main *w);
+void				ft_free(t_env *env);
+int                 ft_tab(t_main *e);
 int					ft_selectremalloc(t_main *e);
 int					ft_cursor(char c);
 int					ft_selectdelete(t_main *e);
@@ -121,15 +119,20 @@ int					ft_pow(int i, int x);
 int					ft_linextention(t_main *e);
 int					ft_ctrlup(t_main *e);
 int					ft_ctrldown(t_main *e);
-int					ft_isbuiltin(t_env *env, char *line);
+int					ft_isbuiltin(t_env *env, t_main *w);
 char				*get_path(t_env *env);
+char				*ft_getvar(t_env *env, char *text);
+char                *ft_getenv(t_env *env, char *text);
 char				**ft_insert(t_env *env, char *com);
 t_env				*set_env(char **line2, t_env *env);
+t_env               *export_var(t_env *env, char **line);
+t_env				*unset_var(t_env *env,  char *line);
 t_env				*ft_unsetenv(t_env *env, char *line);
 t_env				get_dir(t_env *env, char **line);
 t_env				ft_excecute(char **line2, int comcount, t_env *env);
-t_env				*ft_keep_struct(t_env env, int i);
-t_main				*ft_keep_main(t_main w, int i);
+t_env				*ft_keep_struct();
+t_main				*ft_keep_main();
+void               	variable_check(t_main *env);
 void				ft_cd(char *line, t_env *env);
 void				ft_printoct(char *line, int *i);
 void				ft_handle2(char *line, t_echo *ec);
@@ -145,7 +148,7 @@ void				sinno(int signall);
 void				ft_free2d(char **array);
 void				is_quote(t_main *main, char *str);
 void				ft_fdfuncs(char *line);
-void				ft_doublecoms(t_env *env, t_main *w);
+void				ft_doublecoms(t_env *env, t_main *w, int test);
 void				ft_echo(t_env *env, char *line);
 void				ft_exit(t_env *env, t_main *w);
 void				ft_links(char *line);
@@ -154,4 +157,9 @@ void				ft_excve(t_env *env, char **com, int i, t_main *w);
 void				redirection_lt(t_main *w, t_env *env);
 void				redirection_gt(t_main *w, t_env *env, int append);
 void				ft_redirect(t_main *w, t_env *env);
+void				ft_history(t_main *w);
+void				exclamation_history(t_env *env, t_main *w);
+void				ft_if_else(t_env *env, t_main *w);
+void				ft_pp(t_env *env, t_main *w);
+void				ft_aa(t_env *env, t_main *w);
 #endif
