@@ -12,7 +12,7 @@
 
 #include "fortytwosh.h"
 
-void	ft_redirect(t_main *w, t_env *env)
+void	ft_redirect_backup(t_main *w, t_env *env)
 {
 	int		append;
 
@@ -26,6 +26,48 @@ void	ft_redirect(t_main *w, t_env *env)
 	else if (ft_strchr(w->line, '<') != 0)
 		redirection_lt(w, env);
 	ft_strcpy(w->line, "");
+}
+
+void	ft_redirect(t_main *w, t_env *env)
+{
+	char	**coms;
+	char	**coms2;
+	char	**coms_copy;
+
+	if (ft_strchr(w->line, '>') != 0 && ft_strchr(w->line, '<') != 0)
+	{
+		if (ft_first_occur(w->line, '>', '<') == 1)
+		{
+			coms = ft_strsplit(w->line, '>');
+			coms = ft_strsplit(w->line, '<');
+		}
+		else if (ft_first_occur(w->line, '>', '<') == 2)
+		coms_copy = ft_strarr_append(coms);
+	}
+}
+
+void	redirect_stdin(int fd, t_main *w, t_env *env)
+{
+	int		temp_fd;
+
+	temp_fd = dup(STDIN_FILENO);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
+	ft_minishell(env, w);
+	dup2(temp_fd, STDIN_FILENO);
+	close(temp_fd);
+}
+
+void	redirect_stdout(int fd, t_main *w, t_env *env)
+{
+	int 	temp_fd;
+
+	temp_fd = dup(STDOUT_FILENO);
+	dup2(fd, STDOUT_FILENO);
+	close(fd);
+	ft_minishell(env, w);
+	dup2(temp_fd, STDOUT_FILENO);
+	close(temp_fd);
 }
 
 void	redirection_gt(t_main *w, t_env *env, int append)

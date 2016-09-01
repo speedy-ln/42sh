@@ -126,4 +126,6 @@ size_t				ft_wcslen(const wchar_t *ws);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
 t_list				*ft_lstnew(void const *content, size_t content_size);
+int					ft_first_occur(char *str, char first, char second);
+char				**ft_strarr_append(char **str1, char **str2);
 #endif

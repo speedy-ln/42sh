@@ -162,4 +162,5 @@ void				exclamation_history(t_env *env, t_main *w);
 void				ft_if_else(t_env *env, t_main *w);
 void				ft_pp(t_env *env, t_main *w);
 void				ft_aa(t_env *env, t_main *w);
+char				**get_commands(char *line, char **cmd, char *redirects);
 #endif

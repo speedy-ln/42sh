@@ -88,6 +88,8 @@ SRC = ft_ifindstr.c 		\
 	  ft_strnshift.c		\
 	  ft_strrw.c			\
 	  ft_strpaste.c			\
+	  ft_first_occur.c      \
+	  ft_strarr_append.c    \
 
 
 SRCO = $(SRC:.c=.o)
