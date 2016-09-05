@@ -1,0 +1,27 @@
+Redirection.c
+
+Old:
+                ft_redirect
+                    |
+redirection_gt()        redirection_lt()
+
+ft_redirect is called from new.c and it then figures out which redirection is needs to execute.
+The "gt" stands for greater than and "lt" stands for less than.
+I changed the function name to ft_redirect_backup.
+
+
+
+
+New:
+
+                ft_redirect
+                    |
+redirect_stdin()        redirect_stdout()
+
+The section in the old structure got switched up a bit. We now have redirect_stdin which will redirect
+the standard in. You just got to feed it the file descriptor to want to redirect. This makes it easier
+to either iteratively do redirections or even recursively (for those situations where there's more than
+one redirection in a command). Supporting functions are in redirect_support.c
+
+redirection_support.c has a function that tokenizes redirections. Similar to how the c function strok works
+but saves the command and redirection in 2 separate variables.
