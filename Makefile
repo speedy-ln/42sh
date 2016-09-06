@@ -39,6 +39,7 @@ SRC =	file_arf.c			\
 		redirection.c		\
 		vars.c				\
 		variables.c			\
+		redirection_support.c \
 		libft/libft.a		\
 
 all: $(NAME)

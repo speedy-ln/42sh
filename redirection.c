@@ -12,7 +12,7 @@
 
 #include "fortytwosh.h"
 
-void	ft_redirect_backup(t_main *w, t_env *env)
+void	ft_redirect(t_main *w, t_env *env)
 {
 	int		append;
 
@@ -28,34 +28,76 @@ void	ft_redirect_backup(t_main *w, t_env *env)
 	ft_strcpy(w->line, "");
 }
 
-void	ft_redirect(t_main *w, t_env *env)
+void	ft_redirect_backup(t_main *w, t_env *env)
 {
 	char	**coms;
-	char	**coms2;
+	char	**cmd;
+	char	*redirects;
 	char	**coms_copy;
+	int 	i;
+	int		count;
+	int		fd[2];
 
-	if (ft_strchr(w->line, '>') != 0 && ft_strchr(w->line, '<') != 0)
+	i = 0;
+	count = 0;
+	if (ft_strchr(w->line, '>') != 0 || ft_strchr(w->line, '<') != 0) //TODO: change back to &&
 	{
 		if (ft_first_occur(w->line, '>', '<') == 1)
 		{
+			while (w->line[i])
+			{
+				if (w->line[i] == '>')
+					count++;
+				i++;
+			}
+			cmd = (char **)malloc(sizeof(char *) * (count + 1));
+			redirects = (char *)malloc(sizeof(char *) * (count));
+			cmd = get_commands(w->line, cmd, redirects);
+			i = 0;
 			coms = ft_strsplit(w->line, '>');
-			coms = ft_strsplit(w->line, '<');
+//			coms = ft_strsplit(w->line, '<');
+			//TODO: Check for ';' and '|'
+			while (cmd[i])
+			{
+				if (coms[i + 1])
+				{
+//					fd[0] = open(ft_strtrim(cmd[i + 1]), O_RDWR | O_CREAT, 0666);
+//					if (fd[0])
+						redirect_stdin(ft_strtrim(cmd[i + 1]), w, env, ft_strtrim(cmd[i]));
+				}
+				i++;
+			}
 		}
-		else if (ft_first_occur(w->line, '>', '<') == 2)
-		coms_copy = ft_strarr_append(coms);
+//		else if (ft_first_occur(w->line, '>', '<') == 2)
+//			coms_copy = ft_strarr_append(coms);
+
 	}
 }
 
-void	redirect_stdin(int fd, t_main *w, t_env *env)
+void	redirect_stdin(char *file, t_main *w, t_env *env, char *cmd)
 {
 	int		temp_fd;
+	int 	test;
+	int		fd;
 
+
+	fd = open(file, O_RDWR | O_CREAT, 0666);
+	ft_putstr("fd: ");
+	ft_putnbr(fd);
+	ft_putendl(";");
+	ft_putstr("cmd: ");
+	ft_putendl(cmd);
+	ft_putendl(w->line);
 	temp_fd = dup(STDIN_FILENO);
-	dup2(fd, STDIN_FILENO);
+	test = dup2(fd, STDIN_FILENO);
 	close(fd);
+	ft_strcpy(w->line, cmd);
 	ft_minishell(env, w);
 	dup2(temp_fd, STDIN_FILENO);
 	close(temp_fd);
+	ft_putstr("dup2 fd: ");
+	ft_putnbr(test);
+	ft_putendl(";");
 }
 
 void	redirect_stdout(int fd, t_main *w, t_env *env)
@@ -68,6 +110,17 @@ void	redirect_stdout(int fd, t_main *w, t_env *env)
 	ft_minishell(env, w);
 	dup2(temp_fd, STDOUT_FILENO);
 	close(temp_fd);
+}
+
+static	void	test(int fd[], t_main *w, t_env *env, char **coms)
+{
+	fd[1] = dup(STDOUT_FILENO);
+	dup2(fd[0], STDOUT_FILENO);
+	close(fd[0]);
+	ft_strcpy(w->line, ft_strtrim(coms[0]));
+	ft_minishell(env, w);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
 }
 
 void	redirection_gt(t_main *w, t_env *env, int append)
@@ -88,6 +141,8 @@ void	redirection_gt(t_main *w, t_env *env, int append)
 	}
 	else
 	{
+		
+//		test(fd, w, env, coms);
 		fd[1] = dup(STDOUT_FILENO);
 		dup2(fd[0], STDOUT_FILENO);
 		close(fd[0]);

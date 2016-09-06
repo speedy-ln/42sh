@@ -163,4 +163,6 @@ void				ft_if_else(t_env *env, t_main *w);
 void				ft_pp(t_env *env, t_main *w);
 void				ft_aa(t_env *env, t_main *w);
 char				**get_commands(char *line, char **cmd, char *redirects);
+void				redirect_stdin(char *file, t_main *w, t_env *env, char *cmd);
+void				redirect_stdout(int fd, t_main *w, t_env *env);
 #endif
