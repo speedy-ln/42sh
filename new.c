@@ -295,10 +295,10 @@ void	ft_doublecoms(t_env *env, t_main *w, int test)
 
 	i = 0;
 	coms = NULL;
-	w->line = NULL;
 	ft_selectinit(w);
 	if (test == 1)
 	{
+		w->line = NULL;
 		while (ft_select(w, &w->line))
 			;
 	}
@@ -317,7 +317,7 @@ void	ft_doublecoms(t_env *env, t_main *w, int test)
 		ft_minishell(env, w);
 	else if (ft_strchr(w->line, '|') == 0 && ft_strchr(w->line, ';') != 0)
 		semicolon(w, env, coms);
-	if (i == 0)
+	if (i == 0 && test == 1)
 	{
 		ft_putstr("calling myself");
 		free(w->line);

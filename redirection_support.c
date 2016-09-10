@@ -9,7 +9,7 @@ static  void    initialize_null(char *str)
         str[i] = '\0';
 }
 
-char    **get_commands(char *line, char **cmd, char *redirects)
+char    *get_commands(char *line, char **cmd, char *redirects)
 {
     int     count;
     int     redirects_count;
@@ -74,5 +74,5 @@ char    **get_commands(char *line, char **cmd, char *redirects)
     if (cmd[cmd_count + 1])
         cmd[cmd_count + 1] = NULL;
     free(temp);
-    return (cmd);
+    return (redirects);
 }

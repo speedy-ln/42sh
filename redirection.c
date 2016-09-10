@@ -112,7 +112,7 @@ void	ft_redirect(t_main *w, t_env *env)
 		ft_strcpy(wline_copy, w->line);
 		cmd = (char **)malloc(sizeof(char *) * (count + 1));
 		redirects = (char *)malloc(sizeof(char *) * (count));
-		cmd = get_commands(w->line, cmd, redirects);
+		redirects = get_commands(w->line, cmd, redirects);
 		//TODO: Check for ';' and '|'
 		while (cmd[i])
 		{
@@ -125,7 +125,7 @@ void	ft_redirect(t_main *w, t_env *env)
 				else if (redirects[i] == '2')
 					redirect_stdin(ft_strtrim(cmd[i + 1]), w, env, extras);
 				else if (redirects[i] == '1')
-					redirect_heredoc(cmd[i + 1], w, env);
+					redirect_heredoc(cmd[i + 1], w, env, extras);
 			}
 			i++;
 		}
@@ -135,7 +135,7 @@ void	ft_redirect(t_main *w, t_env *env)
 		if (ft_first_occur(w->line, '>', '<') == 1)
 			coms = ft_strarr_append(ft_strsplit(w->line, '>'), ft_strsplit(w->line, '<'));
 		else
-			coms = ft_strarr_append(ft_strsplit(w->line, '>'), ft_strsplit(w->line, '<'));
+			coms = ft_strarr_append(ft_strsplit(w->line, '<'), ft_strsplit(w->line, '>'));
 		extras[1] = 0;
 		fd_backup[0] = dup(STDIN_FILENO);
 		fd_backup[1] = dup(STDOUT_FILENO);
@@ -144,15 +144,15 @@ void	ft_redirect(t_main *w, t_env *env)
 		ft_strcpy(wline_copy, w->line);
 		cmd = (char **)malloc(sizeof(char *) * (count + 1));
 		redirects = (char *)malloc(sizeof(char *) * (count));
-		cmd = get_commands(w->line, cmd, redirects);
+		redirects = get_commands(w->line, cmd, redirects);
 		while (cmd[i])
 		{
 			ft_strcpy(w->line, cmd[0]);
-			extras[0] = append_redirect(wline_copy, i + 1);
+			extras[0] = append_redirect(wline_copy, i);
 			if (coms[i + 1])
 			{
 				if (redirects[i] == '3' || redirects[i] == '4')
-				{//TODO: Modify
+				{
 					redirect_stdout(ft_strtrim(cmd[i + 1]), w, env, extras);
 				}
 				else if (redirects[i] == '2')
@@ -161,19 +161,18 @@ void	ft_redirect(t_main *w, t_env *env)
 				}
 				else if (redirects[i] == '1')
 				{
-					redirect_heredoc(cmd[i + 1], w, env);
+					redirect_heredoc(cmd[i + 1], w, env, extras);
 				}
 			}
 			i++;
 		}
-		ft_minishell(env, w);
+		ft_doublecoms(env, w, 0);
 		fd_restore(fd_backup[0], STDIN_FILENO);
 		fd_restore(fd_backup[1], STDOUT_FILENO);
-
 	}
 }
 
-void	redirect_heredoc(char *file, t_main *w, t_env *env)
+void	redirect_heredoc(char *file, t_main *w, t_env *env, int extras[])
 {
 	char	*line;
 	char	*ln;
@@ -204,7 +203,7 @@ void	redirect_heredoc(char *file, t_main *w, t_env *env)
 		{
 			perror("fork");
 			ft_strcpy(w->line, " ");
-			ft_minishell(env, w);
+			ft_doublecoms(env, w, 0);
 		}
 		else if(childpid == 0)
 		{
@@ -212,10 +211,13 @@ void	redirect_heredoc(char *file, t_main *w, t_env *env)
 			fd[1] = dup(STDIN_FILENO);
 			dup2(fd2[0], STDIN_FILENO);
 			close(fd2[0]);
-			ft_minishell(env, w);
-			dup2(fd[1], STDIN_FILENO);
-			close(fd[1]);
-			close(fd2[0]);
+			if (extras[1] == 1)
+			{
+				ft_doublecoms(env, w, 0);
+				dup2(extras[2], STDIN_FILENO);
+				close(extras[2]);
+				close(fd2[0]);
+			}
 		}
 		else
 		{
@@ -230,7 +232,6 @@ void	redirect_heredoc(char *file, t_main *w, t_env *env)
 
 void	redirect_stdin(char *file, t_main *w, t_env *env, int extras[])
 {
-	int		temp_fd;
 	int		fd;
 
 
@@ -239,26 +240,22 @@ void	redirect_stdin(char *file, t_main *w, t_env *env, int extras[])
 	{
 		ft_putstr("File doesn't exist or cannot be opened.\n");
 		ft_strcpy(w->line, " ");
-		ft_minishell(env, w);
+		ft_doublecoms(env, w, 0);
 	}
 	extras[2] = dup(STDIN_FILENO);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
 	if (extras[1] == 1)
 	{
-		ft_minishell(env, w);
+		ft_doublecoms(env, w, 0);
 		fd_restore(extras[2], STDIN_FILENO);
 //		dup2(extras[2], STDOUT_FILENO);
 //		close(extras[2]);
 	}
-//	ft_minishell(env, w);
-//	dup2(temp_fd, STDIN_FILENO);
-//	close(temp_fd);
 }
 
 void	redirect_stdout(char *file, t_main *w, t_env *env, int extras[])
 {
-//	int		temp_fd;
 	int		fd;
 
 	if (extras[0] == 1)
@@ -270,22 +267,11 @@ void	redirect_stdout(char *file, t_main *w, t_env *env, int extras[])
 	close(fd);
 	if (extras[1] == 1)
 	{
-		ft_minishell(env, w);
+		ft_doublecoms(env, w, 0);
 		fd_restore(extras[3], STDOUT_FILENO);
 //		dup2(extras[3], STDOUT_FILENO);
 //		close(extras[3]);
 	}
-}
-
-static	void	test(int fd[], t_main *w, t_env *env, char **coms)
-{
-	fd[1] = dup(STDOUT_FILENO);
-	dup2(fd[0], STDOUT_FILENO);
-	close(fd[0]);
-	ft_strcpy(w->line, ft_strtrim(coms[0]));
-	ft_minishell(env, w);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
 }
 
 void	redirection_gt(t_main *w, t_env *env, int append)
