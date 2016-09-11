@@ -6,7 +6,7 @@
 #    By: kcowle <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/07 15:59:15 by kcowle            #+#    #+#              #
-#    Updated: 2016/08/19 14:22:18 by knage            ###   ########.fr        #
+#    Updated: 2016/09/11 17:10:39 by lnkadime         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,10 @@ SRC =	file_arf.c			\
 		redirection.c		\
 		vars.c				\
 		variables.c			\
+		redirection.c 		\
+		redirect_heredoc.c 	\
 		redirection_support.c \
+		redirection_support2.c \
 		libft/libft.a		\
 
 all: $(NAME)

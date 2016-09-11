@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/07 15:59:48 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/23 14:55:32 by kcowle           ###   ########.fr       */
+/*   Updated: 2016/09/11 17:22:47 by lnkadime         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,27 @@ typedef struct		s_echo
 	int				o;
 	int				i;
 }					t_echo;
+
+typedef	struct		s_redirection
+{
+	int				redirects_count;
+	int				temp_count;
+	int				cmd_count;
+	int				count;
+	int				i;
+	int				extras[4];
+	int				fd_backup[2];
+	int				fd[2];
+	int				fd2[2];
+	char			*temp;
+	char			*wline_copy;
+	char			**coms;
+	char			**cmd;
+	char			*redirects;
+	char			*line;
+	char			*ln;
+	pid_t			childpid;
+}					t_redirection;
 
 typedef struct		s_main
 {
@@ -162,8 +183,14 @@ void				exclamation_history(t_env *env, t_main *w);
 void				ft_if_else(t_env *env, t_main *w);
 void				ft_pp(t_env *env, t_main *w);
 void				ft_aa(t_env *env, t_main *w);
-char				*get_commands(char *line, char **cmd, char *redirects);
+char				*get_commands(t_redirection *r);
 void				redirect_stdin(char *file, t_main *w, t_env *env, int extras[]);
 void				redirect_stdout(char *file, t_main *w, t_env *env, int extras[]);
-void				redirect_heredoc(char *file, t_main *w, t_env *env, int extras[]);
+void				redirect_heredoc(char *file, t_main *w, t_env *env, t_redirection *r);
+int					get_redirection_count(char *line);
+int					append_redirect(char *line, int iteration);
+void				fd_restore(int fd, int fd2);
+void				redirect_stdin(char *file, t_main *w, t_env *env, int extras[]);
+void				redirect_stdout(char *file, t_main *w, t_env *env, int extras []);
+void				initialize_null(char *str);
 #endif
