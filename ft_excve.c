@@ -66,10 +66,7 @@ void	ft_execve2(t_execve *c, t_env *env, char **com, t_main *w)
 	while (((c->k = 0) || 1) && c->length >= 0)
 		close(c->fd[--c->length + 1]);
 	while (c->k <= c->i)
-	{
-		c->k += 1 + 0 * wait(NULL);
-		env->father = 0;
-	}
+		c->k += 1 + (env->father = 0) + 0 * wait(NULL);
 }
 
 void	ft_excve(t_env *env, char **com, int i, t_main *w)

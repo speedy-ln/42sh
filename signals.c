@@ -6,20 +6,20 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/18 09:47:11 by knage            ###   ########.fr       */
+/*   Updated: 2016/09/09 08:54:27 by kcowle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwosh.h"
 
-t_main	*ft_keep_main()
+t_main	*ft_keep_main(void)
 {
 	static t_main m;
 
 	return (&m);
 }
 
-t_env	*ft_keep_struct()
+t_env	*ft_keep_struct(void)
 {
 	static t_env tmp;
 
@@ -35,7 +35,7 @@ void	ft_quit(void)
 	w = ft_keep_main();
 	if (env->father != 0)
 		kill(env->father, SIGINT);
-	else 
+	else
 		ft_exit(env, w);
 }
 

@@ -6,21 +6,22 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/07 16:01:13 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/07 16:01:23 by kcowle           ###   ########.fr       */
+/*   Updated: 2016/09/06 07:05:27 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <string.h>
 
-char	*ft_strtrim(char const *s) {
-	size_t start;
-	size_t end;
-	char *new;
+char	*ft_strtrim(char const *s)
+{
+	size_t	start;
+	size_t	end;
+	char	*new;
 
 	start = 0;
+	new = NULL;
 	end = ft_strlen(s);
-	if (s)
+	if (s != NULL)
 	{
 		while (ft_iswhitespace(s[start]))
 			start++;
@@ -33,5 +34,5 @@ char	*ft_strtrim(char const *s) {
 			return (NULL);
 		return (ft_strncpy(new, s + start, end - start));
 	}
-	return (NULL);
+	return (new);
 }

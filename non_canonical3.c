@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
+/*   Updated: 2016/09/09 07:31:06 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,42 +35,45 @@ void	ft_exit(t_env *env, t_main *w)
 	ft_freet_main(w);
 	ft_free(env);
 	kill(env->father, SIGTERM);
+	ft_putstr("\n\nKILLING NO\n\n");
+	pause();
 }
 
-int		ft_ctrlup(t_main *e)
+int		ft_ctrlup(int cursor, int x)
 {
 	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
-	if (e->a[e->y].x > win.ws_col - 7)
+	if (x > win.ws_col - 7)
 	{
-		if (e->cursor - win.ws_col > -1)
-			e->cursor -= win.ws_col;
-		else if (e->cursor - win.ws_col + 7 > -1)
-			e->cursor = 0;
+		if (cursor - win.ws_col > -1)
+			cursor -= win.ws_col;
+		else if (cursor - win.ws_col + 7 > -1)
+			cursor = 0;
 	}
-	return (1);
+	return (cursor);
 }
 
-int		ft_ctrldown(t_main *e)
+int		ft_ctrldown(int cursor, int x)
 {
 	struct winsize	win;
 
 	ioctl(0, TIOCGWINSZ, &win);
-	e->cursor += win.ws_col * (e->cursor + win.ws_col <= e->a[e->y].x + 1);
-	return (1);
+	if (cursor + win.ws_col <= x + 1)
+		cursor += win.ws_col;
+	return (cursor);
 }
 
 int		ft_linextention(t_main *e)
 {
-	tputs(tgetstr("dl", 0), 1, ft_ft_putchar);
+	if (ft_tabprint(e))
+		;
 	while (e->lineprom > 0 && ((e->lineprom -= 1) || 1))
-	{
-		tputs(tgetstr("dl", 0), 1, ft_ft_putchar);
-		tputs(tgetstr("up", 0), 1, ft_ft_putchar);
-		tputs(tgetstr("cr", 0), 1, ft_ft_putchar);
-	}
+		ft_selectlinedel();
+	if (e->t.lb && e->t.lh)
+		ft_cleartablines(e);
+	tputs(tgetstr("dl", 0), 1, ft_ft_putchar);
 	tputs(tgetstr("cr", 0), 1, ft_ft_putchar);
-	ft_putstr(e->pro);
+	ft_putstr("<<^>>: ");
 	return (0);
 }

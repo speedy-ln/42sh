@@ -6,102 +6,77 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/09/11 17:35:45 by lnkadime         ###   ########.fr       */
+/*   Updated: 2016/08/12 07:30:51 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fortytwosh.h"
 
-static	void	init_redirect_supp2(t_redirection *r, t_main *w)
+void	ft_redirect(t_main *w, t_env *env)
 {
-	r->extras[1] = 0;
-	r->fd_backup[0] = dup(STDIN_FILENO);
-	r->fd_backup[1] = dup(STDOUT_FILENO);
-	r->count = get_redirection_count(w->line);
-	r->wline_copy = (char *)malloc(sizeof(char *) * (ft_strlen(w->line) + 1));
-	ft_strcpy(r->wline_copy, w->line);
-	r->cmd = (char **)malloc(sizeof(char *) * (r->count + 1));
-	r->redirects = (char *)malloc(sizeof(char *) * (r->count));
+	int		append;
+
+	append = 0;
+	if (ft_strchr(w->line, '>') != 0)
+	{
+		if (ft_findstr(">>", w->line))
+			append = 1;
+		redirection_gt(w, env, append);
+	}
+	else if (ft_strchr(w->line, '<') != 0)
+		redirection_lt(w, env);
 }
 
-static	void	redirect_supp(t_redirection *r, t_main *w, t_env *env)
+void	redirection_gt(t_main *w, t_env *env, int append)
 {
-	r->i = 0;
-	r->extras[1] = 1;
-	r->count = get_redirection_count(w->line);
-	r->wline_copy = (char *)malloc(sizeof(char *) * (ft_strlen(w->line) + 1));
-	ft_strcpy(r->wline_copy, w->line);
-	r->cmd = (char **)malloc(sizeof(char *) * (r->count + 1));
-	r->redirects = (char *)malloc(sizeof(char *) * (r->count));
-	r->redirects = get_commands(r);
-	while (r->cmd[r->i])
+	int		fd[2];
+	char	**coms;
+
+	coms = ft_strsplit(w->line, '>');
+	coms[1] = ft_strtrim(coms[1]);
+	if (append == 1)
+		fd[0] = open(ft_strrw(coms[1]), O_RDWR | O_CREAT | O_APPEND, 0666);
+	else
+		fd[0] = open(ft_strrw(coms[1]), O_RDWR | O_CREAT, 0666);
+	if (fd[0] < 0)
 	{
-		ft_strcpy(w->line, r->cmd[0]);
-		r->extras[0] = append_redirect(r->wline_copy, r->i + 1);
-		if (r->coms[r->i + 1])
-		{
-			if (r->redirects[r->i] == '3' || r->redirects[r->i] == '4')
-				redirect_stdout(ft_strtrim(r->cmd[r->i + 1]), w, env,\
-						r->extras);
-			else if (r->redirects[r->i] == '2')
-				redirect_stdin(ft_strtrim(r->cmd[r->i + 1]), w, env,\
-						r->extras);
-			else if (r->redirects[r->i] == '1')
-				redirect_heredoc(r->cmd[r->i + 1], w, env, r);
-		}
-		r->i++;
+		ft_strcpy(w->line, " ");
+		ft_minishell(env, w);
+	}
+	else
+	{
+		fd[1] = dup(STDOUT_FILENO);
+		dup2(fd[0], STDOUT_FILENO);
+		close(fd[0]);
+		ft_strcpy(w->line, ft_strtrim(coms[0]));
+		ft_minishell(env, w);
+		dup2(fd[1], STDOUT_FILENO);
+		close(fd[1]);
 	}
 }
 
-static	void	redirect_supp2(t_redirection *r, t_main *w, t_env *env)
+void	redirection_lt(t_main *w, t_env *env)
 {
-	init_redirect_supp2(r, w);
-	r->redirects = get_commands(r);
-	while (r->cmd[r->i])
-	{
-		ft_strcpy(w->line, r->cmd[0]);
-		r->extras[0] = append_redirect(r->wline_copy, r->i);
-		if (r->coms[r->i + 1])
-		{
-			if (r->redirects[r->i] == '3' || r->redirects[r->i] == '4')
-				redirect_stdout(ft_strtrim(r->cmd[r->i + 1]), w, env, \
-						r->extras);
-			else if (r->redirects[r->i] == '2')
-				redirect_stdin(ft_strtrim(r->cmd[r->i + 1]), w, env, \
-						r->extras);
-			else if (r->redirects[r->i] == '1')
-				redirect_heredoc(r->cmd[r->i + 1], w, env, r);
-		}
-		r->i++;
-	}
-	ft_doublecoms(env, w, 0);
-}
+	char	**coms;
+	int		fd[2];
 
-void			ft_redirect(t_main *w, t_env *env)
-{
-	t_redirection	r;
-
-	r.i = 0;
-	if ((ft_strchr(w->line, '>') != 0 || ft_strchr(w->line, '<') != 0) &&
-			((ft_strchr(w->line, '>') != 0 && ft_strchr(w->line, '<') == 0) ||
-			(ft_strchr(w->line, '>') == 0 && ft_strchr(w->line, '<') != 0)))
+	coms = ft_strsplit(w->line, '<');
+	fd[0] = open(ft_strrw(coms[1]), O_RDWR);
+	if (fd[0] == -1)
 	{
-		if (ft_first_occur(w->line, '>', '<') == 1)
-			r.coms = ft_strsplit(w->line, '>');
-		else
-			r.coms = ft_strsplit(w->line, '<');
-		redirect_supp(&r, w, env);
+		ft_putstr("File doesn't exist or cannot be opened.\n");
+		ft_strcpy(w->line, " ");
+		ft_minishell(env, w);
 	}
-	else if (ft_strchr(w->line, '>') != 0 && ft_strchr(w->line, '<') != 0)
+	else
 	{
-		if (ft_first_occur(w->line, '>', '<') == 1)
-			r.coms = ft_strarr_append(ft_strsplit(w->line, '>'), \
-					ft_strsplit(w->line, '<'));
-		else
-			r.coms = ft_strarr_append(ft_strsplit(w->line, '<'), \
-					ft_strsplit(w->line, '>'));
-		redirect_supp2(&r, w, env);
-		fd_restore(r.fd_backup[0], STDIN_FILENO);
-		fd_restore(r.fd_backup[1], STDOUT_FILENO);
+		w->line = ft_strnew((size_t)(ft_strlen(w->line) + 1));
+		fd[1] = dup(STDIN_FILENO);
+		dup2(fd[0], STDIN_FILENO);
+		close(fd[0]);
+		ft_strcpy(w->line, coms[0]);
+		ft_minishell(env, w);
+		dup2(fd[1], STDIN_FILENO);
+		close(fd[1]);
 	}
 }

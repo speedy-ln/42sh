@@ -14,7 +14,6 @@
 
 int		ft_findstr(char *find, char *str)
 {
-	int		in_word;
 	int		i;
 	int		j;
 	int		find_len;
@@ -22,7 +21,6 @@ int		ft_findstr(char *find, char *str)
 	i = 0;
 	j = 0;
 	find_len = ft_strlen(find);
-	in_word = 0;
 	while (str[i])
 	{
 		if (str[i] == find[j] && (j + 1 == find_len))

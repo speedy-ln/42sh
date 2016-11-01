@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/07 16:01:11 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/07 16:01:21 by kcowle           ###   ########.fr       */
+/*   Updated: 2016/09/11 12:25:52 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static	t_c	*init_list(void)
 	list[6].f = &ft_putnbr_u_pf;
 	list[7].c = 'S';
 	list[7].f = &ft_putwchar_pf;
+	free(list);
 	return (list);
 }
 

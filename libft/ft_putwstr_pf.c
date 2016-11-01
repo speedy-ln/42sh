@@ -19,7 +19,7 @@ int	ft_putwstr_pf(va_list ap, int nbb)
 
 	i = 0;
 	str = va_arg(ap, wchar_t *);
-	printf("\n%S\n\n", str);
+	ft_printf("\n%S\n\n", str);
 	exit(-1);
 	while (i++ < nbb - ft_wcslen(str))
 		ft_putchar(' ');

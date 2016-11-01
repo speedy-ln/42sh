@@ -20,16 +20,14 @@ int		ft_ft_putchar(int c)
 int		ft_cursor(char c)
 {
 	tputs(tgetstr("so", 0), 1, ft_ft_putchar);
-//	ft_putstr("\033[1;36m");
-    if (c == '\t')
-        write(1, " ", 1);
-    else
-        ft_putchar(c);
-//	ft_putstr("\033[00m");
+	if (c == '\t')
+		write(1, " ", 1);
+	else
+		ft_putchar(c);
 	tputs(tgetstr("se", 0), 1, ft_ft_putchar);
-    if (c == '\t')
-        write(1, "   ", 3);
-    return (0);
+	if (c == '\t')
+		write(1, "   ", 3);
+	return (0);
 }
 
 int		ft_selectdelete(t_main *e)
@@ -61,6 +59,6 @@ int		ft_selectinsert(t_main *e, char c)
 	x = ++e->a[e->y].x;
 	while (--x >= e->cursor)
 		e->a[e->y].line[x + 1] = e->a[e->y].line[x];
-    e->a[e->y].line[x + 1] = c;
+	e->a[e->y].line[x + 1] = c;
 	return (1);
 }

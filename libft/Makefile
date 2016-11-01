@@ -6,7 +6,7 @@
 #    By: kcowle <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/08/07 16:00:34 by kcowle            #+#    #+#              #
-#    Updated: 2016/08/19 09:02:42 by knage            ###   ########.fr        #
+#    Updated: 2016/09/05 08:34:29 by knage            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -88,8 +88,7 @@ SRC = ft_ifindstr.c 		\
 	  ft_strnshift.c		\
 	  ft_strrw.c			\
 	  ft_strpaste.c			\
-	  ft_first_occur.c      \
-	  ft_strarr_append.c    \
+	  ft_strnewline.c		\
 
 
 SRCO = $(SRC:.c=.o)

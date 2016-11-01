@@ -80,4 +80,5 @@ void	ft_pipes(t_env *env, char **coms, int i, t_main *w)
 
 	com = ft_strsplit(coms[i], '|');
 	ft_excve(env, com, count_char(coms[i], '|'), w);
+	ft_free2d(com);
 }

@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/07 16:01:14 by kcowle            #+#    #+#             */
-/*   Updated: 2016/08/19 09:03:08 by knage            ###   ########.fr       */
+/*   Updated: 2016/09/11 12:29:44 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct		s_c
 }					t_c;
 
 int					ft_ifindstr(char *str, char *find);
-size_t				ft_strlen2D(char **str);
+size_t				ft_strlen2d(char **str);
 int					ft_atoi(const char *src);
 int					ft_isalnum(int c);
 int					ft_isalpha(int c);
@@ -75,7 +75,7 @@ int					ft_puthexa_max_pf(va_list ap, int nbb);
 int					ft_puthexa_pf(va_list ap, int nbb);
 int					ft_printf(char const *str, ...);
 int					ft_putwchar_pf(va_list ap, int nbb);
-int                 ft_findstr(char *find, char *str);
+int					ft_findstr(char *find, char *str);
 int					ft_putwstr_pf(va_list ap, int nbb);
 void				ft_putwstr(wchar_t *ws);
 void				ft_putchar(char c);
@@ -101,6 +101,7 @@ void				ft_putstr_fd(const char *s, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				ft_lstadd(t_list **alst, t_list *new);
 char				*ft_itoa(int n);
+char				*ft_strnewline(char *str);
 char				*ft_strcat(char *s1, const char *s2);
 char				*ft_strcpy(char *dest, const char *src);
 char				*ft_strdup(const char *s1);
@@ -117,15 +118,13 @@ char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strpaste(char *str, int start, char *clip, int end);
 char				*ft_strnew(size_t size);
 char				*ft_strtrim(const char *s);
-char                *ft_strrw(char *str);
+char				*ft_strrw(char *str);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strmerge(char *a, char *b);
-char                *ft_strfcut(char *str, unsigned int n);
-char                *ft_strnshift(char *str, unsigned int n);
+char				*ft_strfcut(char *str, unsigned int n);
+char				*ft_strnshift(char *str, unsigned int n);
 size_t				ft_wcslen(const wchar_t *ws);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *str);
 t_list				*ft_lstnew(void const *content, size_t content_size);
-int					ft_first_occur(char *str, char first, char second);
-char				**ft_strarr_append(char **str1, char **str2);
 #endif

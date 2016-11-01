@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/08/18 09:39:47 by knage            ###   ########.fr       */
+/*   Updated: 2016/09/09 11:39:45 by kcowle           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	minishell_support1(t_main *m, t_env *env)
 {
 	if (env->father == 0)
 	{
-		if (ft_strcmp(m->line, "exit") == 0)
-			ft_exit(env, m);
 		m->line = ft_strtrim(m->line);
 		m->line2 = ft_strsplit(m->line, ' ');
 		while (m->line2[m->comcount] != NULL)
@@ -32,6 +30,11 @@ void	minishell_support1(t_main *m, t_env *env)
 		wait(NULL);
 		env->father = 0;
 	}
+	if (m->line != NULL)
+	{
+		free(m->line);
+		m->line = NULL;
+	}
 }
 
 void	ft_minishell(t_env *env, t_main *m)
@@ -40,7 +43,7 @@ void	ft_minishell(t_env *env, t_main *m)
 	{
 		if (m->line[0] == '.' && m->line[1] == '/')
 			m->line = ft_strfcut(m->line, 2);
-		if  (ft_isbuiltin(env, m) == 0)
+		if (ft_isbuiltin(env, m) == 0)
 		{
 			m->comcount = 0;
 			env = ft_keep_struct(*env, 0);
