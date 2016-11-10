@@ -1,10 +1,13 @@
 cmake_minimum_required(VERSION 3.4)
+project(42)
 
-# here we specify that the project is C language only, so the default
-# C compiler on the system will be used
-project(42sh C)
-FILE(GLOB MyCSources *.c libft/*.c)
-set(SOURCE_FILES *.c)
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -ltermcap")
-add_executable(42sh main.c ${MyCSources} libft/ft_first_occur.c test.c libft/ft_strarr_append.c libft/ft_words.c redirection_support.c)
-target_link_libraries(42sh termcap)
+SET(GCC_COVERAGE_LINK_FLAGS    "-ltermcap")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ltermcap")
+set(SOURCE_FILES
+        libft/get_next_line.c libft/ft_abs.c libft/ft_atoi.c libft/ft_atoil.c libft/ft_bzero.c libft/ft_c2da.c libft/ft_findstr.c libft/ft_getfo.c libft/ft_ifindstr.c libft/ft_isalnum.c libft/ft_isalpha.c libft/ft_isascii.c libft/ft_isdigit.c libft/ft_isnbr.c libft/ft_isprint.c libft/ft_iswhitespace.c libft/ft_itoa.c libft/ft_itoa_base.c libft/ft_lstadd.c libft/ft_lstnew.c libft/ft_memalloc.c libft/ft_memccpy.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memdel.c libft/ft_memmove.c libft/ft_memset.c libft/ft_printf.c libft/ft_printf_lib.c libft/ft_put_pf.c libft/ft_put_pf2.c
+        libft/ft_put_pf3.c libft/ft_putchar.c libft/ft_putchar_fd.c libft/ft_putendl.c libft/ft_putendl_fd.c libft/ft_putnbr.c libft/ft_putnbr_base.c libft/ft_putnbr_fd.c libft/ft_putstr.c libft/ft_putstr_fd.c libft/ft_putwstr.c libft/ft_putwstr_pf.c libft/ft_strbcut.c libft/ft_strcat.c libft/ft_strccut.c libft/ft_strchr.c libft/ft_strclr.c libft/ft_strcmp.c libft/ft_strcpy.c libft/ft_strdel.c libft/ft_strdel.c libft/ft_strdup.c libft/ft_strequ.c libft/ft_strfcut.c libft/ft_striter.c libft/ft_striteri.c libft/ft_strjoin.c libft/ft_strlcat.c libft/ft_strlen.c libft/ft_strlen2d.c libft/ft_strmap.c
+        libft/ft_strmapi.c libft/ft_strmcat.c libft/ft_strmerge.c libft/ft_strncat.c libft/ft_strncmp.c libft/ft_strncpy.c libft/ft_strlen.c libft/ft_strnequ.c libft/ft_strnew.c libft/ft_strnewline.c libft/ft_strnshift.c libft/ft_strnstr.c libft/ft_strpaste.c libft/ft_strrchr.c libft/ft_strrw.c libft/ft_strsplit.c libft/ft_strstr.c libft/ft_strsub.c libft/ft_strtrim.c libft/ft_tolower.c libft/ft_toupper.c libft/ft_wcslen.c
+        builtin.c bquote.c bquote2.c cut_copy_paste.c cut_copy_paste_key.c echo.c env.c extras.c extras2.c fdfuncs.c file_arf.c free.c ft_builtin_support.c ft_cd_support.c ft_excve.c func.c get_dir.c get_line.c help.c history.c init.c key_hook.c key_hook_support.c new.c non_canonical.c non_canonical1.c non_canonical2.c non_canonical3.c old.c pipes.c main.c print.c printline.c quote.c redirect_heredoc.c redirection_support.c redirection.c redirection_support2.c return.c shell.c signals.c tab_support.c tab_support1.c tab_support2.c tab_support3.c variables.c vars.c vars2.c)
+#add_definitions(-ltermcap)
+SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
+add_executable(42 ${SOURCE_FILES})

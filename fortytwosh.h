@@ -170,6 +170,27 @@ typedef struct		s_history
 	int yes;
 }					t_history;
 
+typedef	struct		s_redirection
+{
+	int				redirects_count;
+	int				temp_count;
+	int 			cmd_count;
+	int				count;
+	int 			i;
+	int 			extras[4];
+	int 			fd_backup[2];
+	int 			fd[2];
+	int 			fd2[2];
+	char			*temp;
+	char			*wline_copy;
+	char			**coms;
+	char			**cmd;
+	char			*redirects;
+	char			*line;
+	char			*ln;
+	pid_t			childpid;
+}					t_redirection;
+
 int					is_tab_auto_fill0(t_main *e);
 int					is_tab_auto_complete0(t_main *e);
 void				reg_bquote(t_env *env, t_main *w, t_bquote bquote);
@@ -289,4 +310,6 @@ char				**ft_insert(t_env *env, char *com);
 char				*variable_check(char *line);
 char				**temp_return(t_env *env, int *i);
 char				*is_var(char *line, t_env *env);
+void			    redirect_heredoc(char *file, t_main *w, t_env *env, \
+                    t_redirection *r);
 #endif

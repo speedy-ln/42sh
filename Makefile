@@ -60,6 +60,9 @@ SRC =	bquote2.c			\
 		vars2.c				\
 		get_dir.c			\
 		env.c				\
+		redirect_heredoc.c  \
+		redirection_support.c   \
+		redirection_support2.c   \
 
 all: $(NAME)
 
