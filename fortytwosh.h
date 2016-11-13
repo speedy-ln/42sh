@@ -312,4 +312,5 @@ char				**temp_return(t_env *env, int *i);
 char				*is_var(char *line, t_env *env);
 void			    redirect_heredoc(char *file, t_main *w, t_env *env, \
                     t_redirection *r);
+void                init_redirection(t_redirection *r);
 #endif

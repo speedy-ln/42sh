@@ -70,8 +70,10 @@ $(NAME):
 	@echo "compiling libft..."
 	@make re -C libft/
 	@echo "compiling program..."
-	@$(CC) -o $(NAME) $(SRC) -ltermcap
+	@$(CC) -o $(NAME) $(SRC) -ltermcap -g
 	@echo "done! :D"
+
+#@gcc -g $(SRC) -ltermcap
 
 clean:
 	@make clean -C libft/

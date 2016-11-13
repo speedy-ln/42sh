@@ -48,7 +48,10 @@ static	void	redirect_heredoc_supp(t_redirection *r, t_main *w, t_env *env)
 void			redirect_heredoc(char *file, t_main *w, t_env *env, \
 		t_redirection *r)
 {
-	r->fd[0] = open(ft_strtrim(file), O_RDWR);
+//	r->fd[0] = open(ft_strtrim(file), O_RDWR);
+    ft_putendl("executing heredoc...");
+    ft_putendl(r->line);
+    ft_putendl("r->line not initiated");
 	r->ln = (char *)malloc(sizeof(char *) * 1);
 	r->ln[0] = '\0';
 	ft_putstr("heredoc> ");

@@ -61,12 +61,17 @@ void	redirection_lt(t_main *w, t_env *env)
 {
 	char	**coms;
 	int		fd[2];
-    t_redirection   *r;
+    t_redirection   r;
 
+//    r = NULL;
 	coms = ft_strsplit(w->line, '<');
     if (ft_findstr("<<", w->line))
     {
-        redirect_heredoc(ft_strtrim(coms[1]), w, env, r);
+        r.line = ft_strnew((size_t) (ft_strlen(w->line) + 1));
+//        ft_putendl(r.line);
+//        r.line = (char*)malloc((sizeof(char *)) * 1000);
+        init_redirection(&r);
+        redirect_heredoc(ft_strtrim(coms[1]), w, env, &r);
     }
     else {
         fd[0] = open(ft_strtrim(coms[1]), O_RDWR);
