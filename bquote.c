@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/07 10:15:31 by kcowle            #+#    #+#             */
-/*   Updated: 2016/09/10 13:11:25 by knage            ###   ########.fr       */
+/*   Updated: 2016/11/15 11:51:15 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,8 @@ t_main			*ft_bquote(t_env *env, t_main *w)
 		if (ft_bquote_support(env, w, bquote) == 0)
 			reg_bquote(env, w, bquote);
 	}
+	free(bquote.buf);
+	free(bquote.str);
+	free(bquote.bk);
 	return (w);
 }

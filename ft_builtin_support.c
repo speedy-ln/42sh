@@ -27,6 +27,7 @@ int			ft_builtin3(t_env *env, t_main *w)
 		free(w->line);
 		w->line = ft_strtrim(temp);
 		ft_free2d(line2);
+		line2 = NULL;
 		free(temp);
 		line2 = ft_strsplit(w->line, ' ');
 		env = set_env(line2, env);
@@ -59,6 +60,7 @@ int			ft_builtin2(t_env *env, t_main *w)
 	else
 		i = ft_builtin3(env, w);
 	ft_free2d(line2);
+	line2 = NULL;
 	return (i);
 }
 

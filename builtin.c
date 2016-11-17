@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/12 07:30:39 by knage             #+#    #+#             */
-/*   Updated: 2016/09/10 13:15:33 by knage            ###   ########.fr       */
+/*   Updated: 2016/11/15 11:53:17 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_env		*ft_vars_support(t_env *env, t_main *w)
 	int		x;
 	int		i;
 	char	**temp;
+	char 	*temp2;
 
 	i = 0;
 	temp = (char **)malloc(sizeof(char **) * 2);
@@ -24,7 +25,10 @@ t_env		*ft_vars_support(t_env *env, t_main *w)
 	if (env->vars != NULL)
 		temp = temp_return(env, &i);
 	ft_free2d(env->vars);
-	w->line = ft_strtrim(w->line);
+	env->vars = NULL;
+	temp2 = ft_strtrim(w->line);
+	free(w->line);
+	w->line = temp2;
 	temp[i] = (char *)malloc(sizeof(char *) * ft_strlen(w->line) + 1);
 	temp[i + 1] = NULL;
 	ft_strcpy(temp[i], w->line);
@@ -36,7 +40,10 @@ t_env		*ft_vars_support(t_env *env, t_main *w)
 	else
 		ft_putstr("Only alpha numeric characters allowed for local variable\n");
 	if (temp != NULL)
+	{
 		ft_free2d(temp);
+		temp = NULL;
+	}
 	return (env);
 }
 
@@ -123,7 +130,9 @@ int			ft_isbuiltin(t_env *env, t_main *w)
 	line2[0] = (char *)malloc(sizeof(char *) * ft_strlen(temp) + 1);
 	ft_strcpy(line2[0], temp);
 	free(temp);
-	if (ft_strncmp(w->line, "cd", 2) == 0 && (i = 1))
+	if ((ft_strchr(w->line, '>') != 0 || ft_strchr(w->line, '<') != 0) && (i = 1))
+        ft_redirect(w, env);
+	else if (ft_strncmp(w->line, "cd", 2) == 0 && (i = 1))
 		ft_cd(w->line, env);
 	else if (ft_strcmp(w->line, "clear") == 0 && (i = 1))
 		tputs(tgetstr("cl", NULL), 1, ft_ft_putchar);

@@ -21,13 +21,18 @@ void			ft_and_or(t_main *w, t_env *env)
 	w->line = ft_strdup(line2[0]);
 	ft_doublecoms(env, w, 0);
 	ft_free2d(line2);
+	line2 = NULL;
 	line2 = ft_strsplit(line2[1], '|');
 	free(w->line);
 	if (WIFEXITED(env->father) != 0)
 		w->line = ft_strdup(line2[0]);
 	else
 		w->line = ft_strdup(line2[1]);
-	ft_free2d(line2);
+	if (line2 != NULL)
+	{
+		ft_free2d(line2);
+		line2 = NULL;
+	}
 	ft_doublecoms(env, w, 0);
 }
 

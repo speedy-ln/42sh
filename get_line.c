@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/07 11:42:14 by knage             #+#    #+#             */
-/*   Updated: 2016/09/07 12:00:39 by kcowle           ###   ########.fr       */
+/*   Updated: 2016/11/15 12:08:27 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,30 @@ void	cursor_movement(char *buff, t_keyhook *env)
 	}
 }
 
+void	check_line(t_keyhook *env, char *temp)
+{
+	env->cursor = -2;
+	printline(env);
+	temp = ft_strdup(env->line);
+	free(env->line);
+	env->line = ft_strtrim(temp);
+	free(temp);
+	env->line = variable_check(env->line);
+	env->line[env->x + 2] = '\0';
+}
+
 int		return_line(char *buff, t_keyhook *env)
 {
 	char		*temp;
 
-	if (buff[0] == env->ret && !buff[1])
+	if (buff[0] == env->ret[0] && !buff[1] && env->type == 1)
 	{
-		env->cursor = -2;
-		printline(env);
-		temp = ft_strdup(env->line);
-		free(env->line);
-		env->line = ft_strtrim(temp);
-		free(temp);
-		env->line = variable_check(env->line);
-		env->line[env->x + 1] = '\0';
+		check_line(env, temp);
+		return (1);
+	}
+	else if (ft_strcmp(env->line, env->ret) == 0)
+	{
+		check_line(env, temp);
 		return (1);
 	}
 	return (0);
@@ -67,7 +77,7 @@ int		handle_new_line(char *buff, t_keyhook *env)
 		printline(env);
 		ft_putchar('\n');
 		temp2 = ft_strjoin(env->line, buff);
-		temp = get_str(env->pro, env->ret);
+		temp = get_str(env->pro, env->ret, env->type);
 		free(env->line);
 		env->line = ft_strjoin(temp2, temp);
 		env->line = variable_check(env->line);
@@ -76,7 +86,7 @@ int		handle_new_line(char *buff, t_keyhook *env)
 	return (0);
 }
 
-char	*get_str(char *promt, char ret)
+char	*get_str(char *promt, char *ret, int type)
 {
 	char		buff[8];
 	t_keyhook	env;
@@ -84,6 +94,7 @@ char	*get_str(char *promt, char ret)
 	key_hook_init(&env);
 	env.pro = promt;
 	env.ret = ret;
+	env.type = type;
 	while (1)
 	{
 		ft_bzero(buff, 8);
@@ -96,5 +107,5 @@ char	*get_str(char *promt, char ret)
 			return (env.line);
 		ctrl_v(&env, buff);
 	}
-	return (get_str(promt, ret));
+	return (get_str(promt, ret, env.type));
 }

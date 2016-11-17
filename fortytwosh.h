@@ -81,6 +81,8 @@ typedef struct		s_env
 	char			*prev_pwd;
 	char			**vars;
 	int				fail;
+    int             fd[2];
+    int             use_fd;
 }					t_env;
 
 typedef struct		s_echo
@@ -149,17 +151,18 @@ typedef struct		s_main
 typedef struct		s_keyhook
 {
 	char			*line;
+    char			*ret;
+    char			*pro;
+    char			*clip;
+    char			ctrl_v;
 	int				buffsize;
 	int				cursor;
 	int				buff;
 	int				x;
 	int				start;
 	int				end;
-	char			*pro;
-	char			*clip;
-	char			ctrl_v;
 	int				lineprom;
-	char			ret;
+    int             type;
 }					t_keyhook;
 
 typedef struct		s_history
@@ -304,7 +307,7 @@ int					ctrl_v(t_keyhook *env, char buff[4]);
 char				*get_path(t_env *env);
 char				*is_history(char *str, t_21line_l *history);
 char				*ft_getvar(t_env *env, char *text);
-char				*get_str(char *promt, char ret);
+char				*get_str(char *promt, char *ret, int type);
 char				*ft_getenv(t_env *env, char *text);
 char				**ft_insert(t_env *env, char *com);
 char				*variable_check(char *line);

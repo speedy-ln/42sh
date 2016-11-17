@@ -6,7 +6,7 @@
 /*   By: kcowle <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/07 11:36:02 by kcowle            #+#    #+#             */
-/*   Updated: 2016/09/11 12:19:05 by knage            ###   ########.fr       */
+/*   Updated: 2016/11/15 11:50:48 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,23 @@
 
 void		reg_bquote(t_env *env, t_main *w, t_bquote bquote)
 {
+	char	*temp;
+
 	w->line[bquote.i] = '`';
 	bquote.promt = (char *)malloc(sizeof(char *) * ft_strlen("bquote> "));
 	ft_strcpy(bquote.promt, "bquote> ");
 	ft_selectinit(w);
-	bquote.str = get_str(bquote.promt, '`');
+	bquote.str = get_str(bquote.promt, "`", 1);
 	ft_selectend(w);
+	temp = ft_strnewline(bquote.str);
+	bquote.str = temp;
 	free(bquote.promt);
 	bquote.temp = ft_strdup(w->line);
 	free(w->line);
 	w->line = (char *)malloc(sizeof(char *) * ft_strlen(bquote.temp) +
 			ft_strlen(bquote.str) + 2);
 	ft_strcpy(w->line, bquote.temp);
-	ft_strcat(w->line, "\n");
+	ft_strcat(w->line, " ");
 	ft_strcat(w->line, bquote.str);
 	w->line[ft_strlen(w->line)] = '`';
 	ft_putchar('\n');

@@ -12,11 +12,13 @@
 
 #include "fortytwosh.h"
 
-void	minishell_support1(t_main *m, t_env *env)
+void	minishell_support1(t_main *m, t_env *env, char *temp)
 {
 	if (env->father == 0)
 	{
-		m->line = ft_strtrim(m->line);
+		temp = ft_strtrim(m->line);
+		free(m->line);
+		m->line = temp;
 		m->line2 = ft_strsplit(m->line, ' ');
 		while (m->line2[m->comcount] != NULL)
 			m->comcount++;
@@ -30,6 +32,10 @@ void	minishell_support1(t_main *m, t_env *env)
 		wait(NULL);
 		env->father = 0;
 	}
+	if(m->line2 != NULL)
+	{
+
+	}
 	if (m->line != NULL)
 	{
 		free(m->line);
@@ -39,6 +45,8 @@ void	minishell_support1(t_main *m, t_env *env)
 
 void	ft_minishell(t_env *env, t_main *m)
 {
+	char *temp;
+
 	if (m->line[0] != '\0')
 	{
 		if (m->line[0] == '.' && m->line[1] == '/')
@@ -52,7 +60,7 @@ void	ft_minishell(t_env *env, t_main *m)
 			if (env->father >= 0)
 			{
 				signal(SIGINT, sinno);
-				minishell_support1(m, env);
+				minishell_support1(m, env, temp);
 			}
 		}
 	}

@@ -12,6 +12,20 @@
 
 #include "fortytwosh.h"
 
+void	free_stuff(t_env *env)
+{
+	if (env->cmd[0] != NULL)
+	{
+		ft_free2d(env->cmd);
+		env->cmd = NULL;
+	}
+	if (env->args[0] != NULL)
+	{
+		ft_free2d(env->args);
+		env->args = NULL;
+	}
+}
+
 t_env	ft_excecute(char **line2, int comcount, t_env *env)
 {
 	int		i;
@@ -29,10 +43,7 @@ t_env	ft_excecute(char **line2, int comcount, t_env *env)
 	}
 	env->args[i] = NULL;
 	execve(env->cmd[0], env->args, &env->enviro[0]);
-	if (env->cmd[0] != NULL)
-		ft_free2d(env->cmd);
-	if (env->args[0] != NULL)
-		ft_free2d(env->args);
+	free_stuff(env);
 	return (*env);
 }
 

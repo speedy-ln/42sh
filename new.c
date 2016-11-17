@@ -32,6 +32,9 @@ void		com_pipes(t_main *w, t_env *env, char **coms)
 
 	i = 0;
 	coms = ft_strsplit(w->line, ';');
+    if ((ft_strchr(w->line, '>') != 0 || ft_strchr(w->line, '<') != 0) \
+        && ft_strchr(w->line, '|') != 0)
+        env->use_fd = 1;
 	free(w->line);
 	w->line = NULL;
 	while (coms[i] != NULL)

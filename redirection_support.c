@@ -90,6 +90,10 @@ char			*get_commands(t_redirection *r)
 	r->cmd[r->cmd_count] = ft_strdup(r->temp);
 	if (r->cmd[r->cmd_count + 1])
 		r->cmd[r->cmd_count + 1] = NULL;
-	free(r->temp);
+	if (r->temp != NULL)
+	{
+		free(r->temp);
+		r->temp = NULL;
+	}
 	return (r->redirects);
 }

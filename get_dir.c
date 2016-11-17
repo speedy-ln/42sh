@@ -6,7 +6,7 @@
 /*   By: knage <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 13:17:35 by knage             #+#    #+#             */
-/*   Updated: 2016/09/10 13:33:11 by knage            ###   ########.fr       */
+/*   Updated: 2016/11/15 12:15:45 by knage            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		get_dir2(t_env *env, char **line2, char **line)
 		}
 		i++;
 	}
+	free(pdir);
 	return (0);
 }
 
@@ -49,8 +50,26 @@ t_env	path_management(char **line, char **tdir, t_env *env, char **line2)
 	ft_strcat(env->path, tdir[0]);
 	ft_strcat(env->path, "/");
 	if (line2 != NULL)
+	{
 		ft_free2d(line2);
+		line2 = NULL;
+	}
 	return (*env);
+}
+
+void	command_not_found(char **line, char **line2, t_env *env)
+{
+	t_main			*w;
+
+	ft_putstr(line[0]);
+	ft_putstr(": command not found.\n");
+	if (line2[0] != NULL && line2 != NULL)
+	{
+		ft_free2d(line2);
+		line2 = NULL;
+	}
+	w = ft_keep_main();
+	ft_doublecoms(env, w, 1);
 }
 
 t_env	get_dir(t_env *env, char **line)
@@ -71,13 +90,12 @@ t_env	get_dir(t_env *env, char **line)
 	if (get_dir2(env, line2, line))
 	{
 		if (line2 != NULL)
+		{
 			ft_free2d(line2);
-		line2 = NULL;
+			line2 = NULL;
+		}
 		return (*env);
 	}
-	ft_putstr(line[0]);
-	ft_putstr(": command not found.\n");
-	if (line2[0] != NULL && line2)
-		ft_free2d(line2);
+	command_not_found(line, line2, env);
 	return (*env);
 }

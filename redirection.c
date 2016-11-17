@@ -51,7 +51,8 @@ void	redirection_gt(t_main *w, t_env *env, int append)
 		dup2(fd[0], STDOUT_FILENO);
 		close(fd[0]);
 		ft_strcpy(w->line, ft_strtrim(coms[0]));
-		ft_minishell(env, w);
+		ft_doublecoms(env, w, 0);
+//		ft_minishell(env, w);
 		dup2(fd[1], STDOUT_FILENO);
 		close(fd[1]);
 	}
@@ -67,6 +68,7 @@ void	redirection_lt(t_main *w, t_env *env)
 	coms = ft_strsplit(w->line, '<');
     if (ft_findstr("<<", w->line))
     {
+		r.coms = ft_strsplit(w->line, '<');
         r.line = ft_strnew((size_t) (ft_strlen(w->line) + 1));
 //        ft_putendl(r.line);
 //        r.line = (char*)malloc((sizeof(char *)) * 1000);
